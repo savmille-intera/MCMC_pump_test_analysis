@@ -1,0 +1,19 @@
+# Wells to run MCMC pump-test analysis on.
+# ----------------------------------------
+# Each line is a path to a well directory (absolute or relative to repo root).
+# Lines starting with # and blank lines are ignored.
+#
+# Usage:
+#   cd "main python files"
+#   python run_wells.py            # single-chain MCMC
+#   python run_wells.py --gr       # Gelman-Rubin multi-chain MCMC
+
+../well CR-15
+../well CR-16
+../well CR-226
+../well CR-228
+../well CR-229
+../well CR-230
+../well CR-231
+../well CR-232
+
