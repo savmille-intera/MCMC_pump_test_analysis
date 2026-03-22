@@ -184,8 +184,9 @@ def run_mcmc(lower_bound, upper_bound, obs_data, obs_time, obs_dd, obs_err, q_da
     print("Mean autocorrelation time = ", np.mean(tau))
     print("Should run for approx.", int(100 * np.mean(tau)))
 
-    samples = sampler.flatchain
-    new_theta_max = samples[np.argmax(sampler.flatlnprobability)]
+    samples = backend.get_chain(flat=True)
+    flat_log_prob = backend.get_log_prob(flat=True)
+    new_theta_max = samples[np.argmax(flat_log_prob)]
     new_best_fit_model, _ = log_prob_fn.run_model(new_theta_max[0:-1])
     med_model, spread = sample_walkers(log_prob_fn, 50, samples)
     finalize_mcmc_plots(obs_time, obs_dd, new_best_fit_model, med_model, spread, samples, initial)

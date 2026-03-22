@@ -303,6 +303,49 @@ def finalize_mcmc_plots(obs_time, obs_dd, new_best_fit_model, med_model, spread,
     plt.show()
 
 
+def sample_annual_power_energy_costs(flat_samples, r, norm_pump_rate, cfg, n_samp=400, rng=None):
+    if rng is None:
+        rng = np.random.default_rng()
+
+    obs_time = np.logspace(np.log10(0.001), np.log10(cfg.pump_duration), 40)
+    obs_dd = np.ones_like(obs_time)
+    q_data = np.array([[0.0, norm_pump_rate]])
+    ds_dt_at_data = np.zeros_like(obs_dd)
+    q_at_data = make_Q_at_data(obs_time, q_data)
+
+    power_kw = np.zeros(n_samp)
+    inds = rng.integers(0, len(flat_samples), size=n_samp)
+
+    for i, ind in enumerate(inds):
+        sample_now = flat_samples[ind]
+        S, T = sample_now[0:2]
+        tvec = make_tvec(S, T, max(obs_time), r)
+        Q = makeQ_of_t(tvec, q_data)
+        model_dd, efficiency = fun_pump(sample_now[0:4], Q, q_at_data, tvec, ds_dt_at_data, obs_time, r)
+        noise_dd = np.exp(sample_now[-1]) * model_dd * rng.normal(size=np.size(model_dd))
+        energy_kW, _ = energy_calc(
+            cfg.d_total_well,
+            cfg.d_to_water,
+            (model_dd[-1] + noise_dd[-1]),
+            cfg.pipe_D,
+            cfg.pump_E,
+            efficiency[-1],
+            cfg.hazen,
+            q_at_data[-1],
+        )
+        power_kw[i] = energy_kW
+
+    annual_energy_kwh = power_kw * cfg.pump_hr_year
+    annual_total_costs = annual_energy_kwh * cfg.elec_cost
+    return power_kw, annual_energy_kwh, annual_total_costs
+
+
+def sample_annual_total_costs(flat_samples, r, norm_pump_rate, cfg, n_samp=400, rng=None):
+    _, _, annual_total_costs = sample_annual_power_energy_costs(flat_samples, r, norm_pump_rate, cfg, n_samp=n_samp, rng=rng)
+
+    return annual_total_costs
+
+
 def run_prediction_block(flat_samples, lower_bound, upper_bound, obs_err, r, norm_pump_rate, cfg):
     obs_time = np.logspace(np.log10(0.001), np.log10(cfg.pump_duration), 40)
     obs_dd = np.ones_like(obs_time)

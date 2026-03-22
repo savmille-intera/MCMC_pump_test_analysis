@@ -61,6 +61,7 @@ def read_well_dirs(wells_file):
 
 def main():
     args = parse_args()
+
     well_dirs = read_well_dirs(args.wells)
 
     if not well_dirs:
