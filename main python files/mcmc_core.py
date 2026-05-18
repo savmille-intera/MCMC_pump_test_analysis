@@ -281,6 +281,8 @@ def finalize_mcmc_plots(obs_time, obs_dd, new_best_fit_model, med_model, spread,
     labels = ["S", "T", "ln(C)", "p", "ln(k_mag)"]
     corner.corner(samples, labels=labels, truths=[initial[0], initial[1], initial[2], initial[3], initial[4]])
     plt.savefig("corner.pdf")
+    # also save as svg for better quality in presentations
+    plt.savefig("corner.svg")
 
     plt.figure(figsize=(12, 6))
     plt.subplot(1, 2, 1)

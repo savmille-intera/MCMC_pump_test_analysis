@@ -10,11 +10,11 @@
 
 #../well CR-15
 #../well CR-16
-#../well CR-226
+../well CR-226
 #../well CR-228
 #../well CR-229
 #../well CR-230
 #../well CR-231
 #../well CR-232
-../well test_15
+
 

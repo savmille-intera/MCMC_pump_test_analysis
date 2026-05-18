@@ -1,3 +1,5 @@
 # Python bytecode caches
 __pycache__/
+*.h5
+.DS_Store
 

@@ -9,4 +9,4 @@
 #   python run_wells.py --gr       # Gelman-Rubin multi-chain MCMC
 
 
-../example/dewatering_example/mine_dewatering
+../example/dewatering_example/mine_dewatering_4

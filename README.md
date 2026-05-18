@@ -1,6 +1,7 @@
 # MCMC_pump_test_analysis (updated 3/21/26)
 
 **Updates**
+- 5/13/2026 — Added deterministic vs probabilistic comparison and QAQC diagnostics to the synthetic dewatering example (see `example/dewatering_example/`).
 - 3/21/2026 — Refactored scripts into shared core module; added batch runner; no more copy/paste into well folders.
 - 1/1/2026 — Modified FFT convolution routine for ~4× speed improvement.
 
@@ -21,6 +22,10 @@ MCMC_pump_test_analysis/
 ├── env.yml                          # Conda environment (all required packages)
 ├── wells_to_run.txt                 # List of well directories to process
 ├── README.md
+├── example/
+│   └── dewatering_example/          # Synthetic mine dewatering example
+│       ├── dewatering_analysis.py   # Pump-rate sweep, risk analysis, deterministic comparison, QAQC
+│       └── mine_dewatering/         # Input data and all generated outputs
 ├── main python files/
 │   ├── run_wells.py                 # Batch runner — entry point for all analyses
 │   ├── mcmc_core.py                         # Shared model/math/utility functions

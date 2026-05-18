@@ -1,0 +1,9 @@
+MAP fit QAQC summary
+  RMSE (ft):           7.6501
+  Bias (ft):           0.5924
+  Relative RMSE (%):   3.64
+  Max abs residual:    23.0011 ft
+  Std of residuals:    7.6271 ft
+
+Posterior predictive coverage (90% interval): 96.43%
+  (ideal ≈ 90%; <90% → underestimated uncertainty; >90% → overestimated)
